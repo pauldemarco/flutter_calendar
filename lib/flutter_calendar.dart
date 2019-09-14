@@ -185,17 +185,15 @@ class _CalendarState extends State<Calendar> {
 
     if (isExpanded) {
       final TextStyle body1StyleDisabled = body1Style.copyWith(
-        color: Color.fromARGB(
-          100, 
-          body1Style.color.red, 
-          body1Style.color.green, 
-          body1Style.color.blue,
-        )
-      );
+          color: Color.fromARGB(
+        100,
+        body1Style.color.red,
+        body1Style.color.green,
+        body1Style.color.blue,
+      ));
 
-      dateStyles = monthStarted && !monthEnded
-          ? body1Style
-          : body1StyleDisabled;
+      dateStyles =
+          monthStarted && !monthEnded ? body1Style : body1StyleDisabled;
     } else {
       dateStyles = body1Style;
     }
@@ -376,6 +374,14 @@ class _CalendarState extends State<Calendar> {
 
   void toggleExpanded() {
     if (widget.isExpandable) {
+      var firstDate = (isExpanded)
+          ? Utils.firstDayOfWeek(_selectedDate)
+          : Utils.firstDayOfMonth(_selectedDate);
+      var lastDate = (isExpanded)
+          ? Utils.lastDayOfWeek(_selectedDate)
+          : Utils.lastDayOfMonth(_selectedDate);
+      updateSelectedRange(firstDate, lastDate);
+
       setState(() => isExpanded = !isExpanded);
     }
   }
